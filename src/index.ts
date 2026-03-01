@@ -27,7 +27,7 @@ client.once(Events.ClientReady, (readyClient) => {
   readyClient.user.setPresence({
     activities: [
       {
-        name: "for 📎 reactions",
+        name: "Watching for 📎 reactions",
         type: ActivityType.Watching,
       },
     ],
