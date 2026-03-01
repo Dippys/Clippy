@@ -11,6 +11,7 @@ A Discord bot that sends you a DM whenever someone reacts with your tracked emoj
 - **Custom Messages** — set and update a personalized notification note via a pop-up modal, as many times as you want before confirming.
 - **Per-User Config** — each person manages their own watchers; multiple users can track the same emoji.
 - **Zero Server Clutter** — setup embeds auto-delete after completion or timeout. Notifications are always DMs.
+- **Privacy-Safe Delivery** — if you can't view the channel where the reaction happened, Clippy sends no DM for that event.
 - **Cooldowns** — you won't get spammed if the same emoji is reacted multiple times on the same message.
 - **Up to 10 watchers** per user per server.
 
@@ -96,11 +97,11 @@ All commands are under `/clippy`. Each one uses the slash command reply itself a
 ## How It Works
 
 1. A user runs `/clippy watch`.
-2. The bot posts a temporary embed in the channel — the user **reacts** to it with any emoji.
+2. The bot uses the slash command reply message in the channel as the setup panel — the user **reacts** to it with any emoji.
 3. The embed updates to a review screen with the selected emoji and default message, plus buttons: **Done**, **Cancel**, **Add Custom Message**.
 4. Pressing **Add Custom Message** opens a modal to type/update the notification text. The button then becomes **Update Message** so you can keep tweaking it.
 5. Press **Done** — the watcher is saved and the setup message auto-deletes.
-6. From then on, whenever **anyone** in the server reacts with that emoji on any message, Clippy DMs the watcher with:
+6. From then on, whenever **anyone** in the server reacts with that emoji on any message, Clippy DMs the watcher (only if they can view that channel) with:
    - Who reacted
    - Message content preview
    - Server, channel, and message author info
