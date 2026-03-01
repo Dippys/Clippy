@@ -1,4 +1,4 @@
-import { Client, GatewayIntentBits, Partials, Events } from "discord.js";
+import { ActivityType, Client, GatewayIntentBits, Partials, Events } from "discord.js";
 import dotenv from "dotenv";
 import { initDatabase, closeDatabase } from "./database";
 import { handleInteraction } from "./commands/handler";
@@ -24,6 +24,16 @@ const client = new Client({
 });
 
 client.once(Events.ClientReady, (readyClient) => {
+  readyClient.user.setPresence({
+    activities: [
+      {
+        name: "for 📎 reactions",
+        type: ActivityType.Watching,
+      },
+    ],
+    status: "online",
+  });
+
   logInfo(`Clippy is online as ${readyClient.user.tag}`);
   logInfo(`Watching ${readyClient.guilds.cache.size} server(s)`);
 });
