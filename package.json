@@ -1,0 +1,28 @@
+{
+  "name": "clippy",
+  "version": "1.0.0",
+  "description": "Clippy — A Discord bot that DMs users when their configured emoji is reacted on any message.",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "ts-node src/index.ts",
+    "deploy": "ts-node src/deploy.ts"
+  },
+  "keywords": ["discord", "bot", "reaction", "notification"],
+  "license": "MIT",
+  "dependencies": {
+    "better-sqlite3": "^12.6.2",
+    "discord.js": "^14.25.1",
+    "dotenv": "^17.3.1"
+  },
+  "overrides": {
+    "undici": ">=6.23.0"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/node": "^25.3.3",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  }
+}
