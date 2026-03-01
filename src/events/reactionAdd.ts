@@ -2,6 +2,7 @@ import {
   Client,
   EmbedBuilder,
   MessageReaction,
+  PermissionFlagsBits,
   PartialMessageReaction,
   User,
   PartialUser,
@@ -73,7 +74,7 @@ export async function handleReactionAdd(
       ? `#${message.channel.name}`
       : "Unknown channel";
 
-  const guild = client.guilds.cache.get(guildId);
+  const guild = message.guild ?? client.guilds.cache.get(guildId);
   const serverName = guild?.name ?? "Unknown server";
   const messageLink = `https://discord.com/channels/${guildId}/${message.channelId}/${message.id}`;
 
@@ -83,6 +84,23 @@ export async function handleReactionAdd(
 
     // Cooldown: don't DM the same watcher for the same message+emoji combo
     if (hasCooldown(guildId, watcher.user_id, message.id, emojiIdentifier)) {
+      continue;
+    }
+
+    let canViewChannel = false;
+    if (guild) {
+      const member =
+        guild.members.cache.get(watcher.user_id) ??
+        (await guild.members.fetch(watcher.user_id).catch(() => null));
+
+      if (member && message.channel && "permissionsFor" in message.channel) {
+        canViewChannel =
+          message.channel.permissionsFor(member)?.has(PermissionFlagsBits.ViewChannel) ?? false;
+      }
+    }
+
+    // If the watcher cannot view the channel, do not send any notification.
+    if (!canViewChannel) {
       continue;
     }
 
